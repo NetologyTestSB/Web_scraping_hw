@@ -18,7 +18,7 @@ def find_keywords_in_description(link) ->bool :
     tag_content = soup.find(class_='vacancy-description-print')
     if tag_content:
         text = tag_content.text.lower()
-        if 'django' in text or 'flask' in text:
+        if 'django' in text and 'flask' in text:
             return True
     return False
 
@@ -28,8 +28,6 @@ def parse_all_vacancies(page_text, res):
     vacancies = soup.find_all('div', class_='serp-item', limit=50)
     qty = len(vacancies) - 1
     for ind, vacancy in enumerate(vacancies):
-        # fill = round(20 * ind / qty)
-        # print(f'\r  {(100 * ind / qty):3.0f}% {("▒" * fill).ljust(20)}', end='')
         link_tag = vacancy.find("a", class_='serp-item__title')
         link = link_tag['href']
         title = link_tag.text
